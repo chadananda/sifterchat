@@ -20,29 +20,41 @@ export const ChatContainer = () => {
   ]);
 
   const handleSendMessage = (content: string) => {
-    const newMessage: Message = {
+    const newMessage = {
       id: messages.length + 1,
       content,
       timestamp: new Date().toLocaleTimeString(),
       isUser: true,
     };
-    setMessages((prev) => [...prev, newMessage]);
+    
+    setMessages(prev => [...prev, newMessage]);
 
-    // Simulate response
-    setTimeout(() => {
-      const response: Message = {
+    // Simulate response using modern async/await
+    (async () => {
+      const response = {
         id: messages.length + 2,
         content: "Thanks for your message! This is a demo response.",
         timestamp: new Date().toLocaleTimeString(),
         isUser: false,
       };
-      setMessages((prev) => [...prev, response]);
-    }, 1000);
+      
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setMessages(prev => [...prev, response]);
+    })();
   };
 
   return (
-    <div className="flex h-screen flex-col bg-gradient-to-br from-purple-50 to-blue-50">
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+    <div 
+      className="grid h-screen grid-rows-[1fr_auto]"
+      style={{
+        background: `linear-gradient(
+          135deg,
+          oklch(98% 0.02 260) 0%,
+          oklch(95% 0.03 270) 100%
+        )`
+      }}
+    >
+      <div className="overflow-y-auto p-4 space-y-4 scroll-smooth">
         {messages.map((message) => (
           <ChatMessage key={message.id} {...message} />
         ))}

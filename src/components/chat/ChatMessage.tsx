@@ -11,19 +11,24 @@ export const ChatMessage = ({ content, timestamp, isUser = false }: ChatMessageP
     <div
       className={cn(
         "flex w-full animate-fade-in gap-2 p-2",
-        isUser ? "justify-end" : "justify-start"
+        isUser && "justify-end"
       )}
     >
       <div
         className={cn(
-          "max-w-[80%] rounded-lg px-4 py-2 shadow-sm",
+          "group relative max-w-[80%] rounded-lg px-4 py-2 shadow-sm transition-all",
           isUser
-            ? "bg-primary text-primary-foreground"
-            : "bg-secondary text-secondary-foreground"
+            ? "bg-primary text-primary-foreground hover:translate-x-[-2px]"
+            : "bg-secondary text-secondary-foreground hover:translate-x-[2px]"
         )}
       >
         <p className="break-words">{content}</p>
-        <span className="mt-1 block text-xs opacity-70">{timestamp}</span>
+        <time 
+          className="mt-1 block text-xs opacity-70 transition-opacity group-hover:opacity-100"
+          dateTime={timestamp}
+        >
+          {timestamp}
+        </time>
       </div>
     </div>
   );
