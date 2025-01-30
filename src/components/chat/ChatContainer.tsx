@@ -29,7 +29,6 @@ export const ChatContainer = () => {
     
     setMessages(prev => [...prev, newMessage]);
 
-    // Simulate response using modern async/await
     (async () => {
       const response = {
         id: messages.length + 2,
@@ -44,17 +43,13 @@ export const ChatContainer = () => {
   };
 
   return (
-    <div 
-      className="grid h-screen grid-rows-[1fr_auto]"
-      style={{
-        background: `linear-gradient(
-          135deg,
-          oklch(98% 0.02 260) 0%,
-          oklch(95% 0.03 270) 100%
-        )`
-      }}
-    >
-      <div className="overflow-y-auto p-4 space-y-4 scroll-smooth">
+    <div className="grid h-full grid-rows-[1fr_auto]">
+      <div 
+        className="overflow-y-auto p-4 space-y-4 scroll-smooth"
+        style={{
+          viewTransitionName: "chat-messages"
+        }}
+      >
         {messages.map((message) => (
           <ChatMessage key={message.id} {...message} />
         ))}
